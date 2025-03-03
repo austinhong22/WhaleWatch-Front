@@ -1,13 +1,182 @@
 .community-container {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2.5rem 1rem;
+  padding: 2rem 1rem;
+}
+
+.community-header {
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .page-title {
   font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.board-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.search-box {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  width: 300px;
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #e2e8f0;
+}
+
+.new-post-button {
+  padding: 0.5rem 1rem;
+  background-color: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.new-post-button:hover {
+  background-color: #2c5282;
+}
+
+.board-container {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.board-table th {
+  background-color: #f8fafc;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #4a5568;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.board-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.board-row:hover {
+  background-color: #f8fafc;
+}
+
+.no-column {
+  width: 5%;
+}
+
+.title-column {
+  width: 50%;
+}
+
+.author-column {
+  width: 15%;
+}
+
+.date-column {
+  width: 15%;
+}
+
+.views-column {
+  width: 7.5%;
+}
+
+.likes-column {
+  width: 7.5%;
+}
+
+.post-title-link {
+  color: #2d3748;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.post-title-link:hover {
+  color: #3182ce;
+  text-decoration: underline;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pagination-button {
+  padding: 0.5rem 0.75rem;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.pagination-button:hover {
+  background-color: #e2e8f0;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.page-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  background-color: #f8fafc;
+  cursor: pointer;
+}
+
+.page-number:hover {
+  background-color: #e2e8f0;
+}
+
+.page-number.active {
+  background-color: #3182ce;
+  color: white;
+  border-color: #3182ce;
 }
 
 .posts-container {
