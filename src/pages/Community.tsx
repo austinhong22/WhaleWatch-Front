@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Community.css';
 
@@ -11,6 +11,18 @@ interface Post {
   views: number;
   likes: number;
   content: string;
+}
+
+// 코인 타입 정의
+interface Coin {
+  id: string;
+  symbol: string;
+  name: string;
+  image: string;
+  current_price: number;
+  price_change_percentage_24h: number;
+  market_cap: number;
+  total_volume: number;
 }
 
 // 목업 데이터
@@ -110,6 +122,40 @@ const mockPosts: Post[] = [
 const Community = () => {
   const [posts, setPosts] = useState<Post[]>(mockPosts);
   const [searchTerm, setSearchTerm] = useState("");
+  const [coins, setCoins] = useState<Coin[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  // 코인 데이터 불러오기
+  useEffect(() => {
+    const fetchCoins = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h'
+        );
+        
+        if (!response.ok) {
+          throw new Error('네트워크 응답이 정상이 아닙니다');
+        }
+        
+        const data = await response.json();
+        setCoins(data);
+        setLoading(false);
+      } catch (error) {
+        setError('데이터를 불러오는 데 실패했습니다');
+        setLoading(false);
+        console.error('코인 데이터 로딩 오류:', error);
+      }
+    };
+
+    fetchCoins();
+    
+    // 1분마다 데이터 갱신
+    const interval = setInterval(fetchCoins, 60000);
+    
+    return () => clearInterval(interval);
+  }, []);
   
   const filteredPosts = posts.filter(post => 
     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -121,6 +167,44 @@ const Community = () => {
       <div className="community-header">
         <h1 className="page-title">커뮤니티</h1>
         <p className="page-subtitle">고래 거래와 시장 동향에 대해 다른 사용자들과 의견을 나눠보세요.</p>
+      </div>
+      
+      {/* 실시간 코인 가격 섹션 */}
+      <div className="coin-ticker-section">
+        <div className="ticker-header">
+          <h2 className="ticker-title">실시간 시세</h2>
+          <div className="ticker-update">
+            <span className="update-dot"></span>
+            <span>실시간 업데이트</span>
+          </div>
+        </div>
+        
+        {loading ? (
+          <div className="ticker-loading">데이터를 불러오는 중...</div>
+        ) : error ? (
+          <div className="ticker-error">{error}</div>
+        ) : (
+          <div className="coin-ticker-container">
+            {coins.map((coin) => (
+              <div key={coin.id} className="coin-card">
+                <div className="coin-info">
+                  <img src={coin.image} alt={coin.name} className="coin-icon" />
+                  <div className="coin-name-container">
+                    <span className="coin-name">{coin.name}</span>
+                    <span className="coin-symbol">{coin.symbol.toUpperCase()}</span>
+                  </div>
+                </div>
+                <div className="coin-price-container">
+                  <span className="coin-price">${coin.current_price.toLocaleString()}</span>
+                  <span className={`coin-change ${coin.price_change_percentage_24h >= 0 ? 'positive' : 'negative'}`}>
+                    {coin.price_change_percentage_24h >= 0 ? '▲' : '▼'} 
+                    {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       
       <div className="board-controls">
