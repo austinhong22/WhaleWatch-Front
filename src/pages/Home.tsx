@@ -62,10 +62,6 @@ const Home = () => {
               <span className="stat-label">최근 24시간 고래 거래량</span>
             </div>
             <div className="hero-stat">
-              <span className="stat-value">157</span>
-              <span className="stat-label">활성 고래 주소</span>
-            </div>
-            <div className="hero-stat">
               <span className="stat-value">2,451</span>
               <span className="stat-label">오늘의 대규모 거래</span>
             </div>
